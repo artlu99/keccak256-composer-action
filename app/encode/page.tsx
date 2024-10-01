@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { gql, request } from "graphql-request";
 import keccak256 from "keccak256";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { processSubmission } from "../actions";
 
 const WHISTLES_ENDPOINT = "https://yoga-whistles.artlu.workers.dev/graphql";
@@ -19,7 +19,7 @@ interface Whistles {
   isPrePermissionless?: boolean;
 }
 
-export default function Page() {
+function EncodingForm() {
   const searchParams = useSearchParams();
   const fidParam = searchParams.get("fid"); // this is easily spoofed
   const fid = fidParam ? parseInt(fidParam) : undefined;
@@ -169,3 +169,9 @@ export default function Page() {
     </div>
   );
 }
+
+export default function Page() {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>{<EncodingForm />}</Suspense>
+    );
+  }
