@@ -1,20 +1,23 @@
 "use client";
 
-import { request } from "graphql-request";
+import { useQuery } from "@tanstack/react-query";
+import { gql, request } from "graphql-request";
 import keccak256 from "keccak256";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 import { processSubmission } from "../actions";
 
-const GRAPHQL_ENDPOINT = "https://yoga-whistles.artlu.workers.dev/graphql";
+const WHISTLES_ENDPOINT = "https://yoga-whistles.artlu.workers.dev/graphql";
+const WHISTLES_QUERY = gql`
+  query GetWhistles($fid: Int) {
+    heartbeat
+    isPrePermissionless(fid: $fid)
+  }
+`;
 interface Whistles {
   heartbeat: boolean;
   isPrePermissionless?: boolean;
 }
-
-const fetcher = (query, variables) =>
-  request(GRAPHQL_ENDPOINT, query, variables);
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -30,20 +33,14 @@ export default function Page() {
   const [isDisabledComposeButton, setIsDisabledComposeButton] = useState(true);
   const [isPrivate, setIsPrivate] = useState(false);
 
-  const query = `
-    query GetWhistles($fid: Int) {
-      heartbeat
-      isPrePermissionless(fid: $fid)
-    }
-  `;
-
-  const { data } = useSWR<Whistles>(
-    fid ? [query, { fid }] : null,
-    ([query, variables]) => fetcher(query, variables)
-  );
+  const { data } = useQuery<Whistles, Error>({
+    queryKey: ["whistles-query"],
+    queryFn: () =>
+      request<Whistles>(WHISTLES_ENDPOINT, WHISTLES_QUERY, { fid }),
+  });
 
   useEffect(() => {
-    if (data?.heartbeat) {
+    if (data) {
       setWhistles(data);
     }
   }, [data]);
