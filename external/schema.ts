@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export const endpoint = "https://yoga-whistles.artlu.workers.dev/graphql";
+export const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
 export const query = gql`
   query GetResponse($fid: Int) {
     heartbeat
@@ -11,7 +11,7 @@ export interface Response {
   heartbeat: boolean;
   isPrePermissionless?: boolean;
 }
-export const authToken = process.env.YOGA_WHISTLES_AUTH_TOKEN;
+export const authToken = process.env.AUTH_TOKEN;
 export const mutation = gql`
   mutation UpdateData(
     $fid: Int
