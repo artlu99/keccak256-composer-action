@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
+export const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT!;
 export const query = gql`
   query GetResponse($fid: Int) {
     heartbeat
