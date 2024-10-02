@@ -1,5 +1,7 @@
 "use server";
 
+import { authToken, endpoint, mutation } from "@/external/schema";
+import { GraphQLClient } from "graphql-request";
 import { z } from "zod";
 
 const schema = z.object({
@@ -29,8 +31,15 @@ export async function processSubmission(formData: FormData) {
     console.error({ errors: validatedFields.error.flatten().fieldErrors });
   }
 
-  console.log(validatedFields);
+  const graphQLClient = new GraphQLClient(endpoint, {
+    headers: {
+      authorization: `Bearer ${authToken}`,
+    },
+  });
 
-  // mutate data
-  // revalidate cache
+  try {
+    await graphQLClient.request(mutation, validatedFields.data);
+  } catch (error) {
+    console.error("Error updating data:", error);
+  }
 }
