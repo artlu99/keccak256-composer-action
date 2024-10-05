@@ -14,9 +14,9 @@ export interface Response {
 export const authToken = process.env.AUTH_TOKEN;
 export const mutation = gql`
   mutation UpdateData(
-    $fid: Int
-    $timestamp: Int
-    $messageHash: String
+    $fid: Int!
+    $timestamp: Timestamp!
+    $messageHash: String!
     $text: String!
   ) {
     updateData(

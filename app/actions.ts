@@ -10,11 +10,7 @@ const schema = z.object({
     .transform((val) => parseInt(val, 10))
     .pipe(z.number())
     .nullable(),
-  timestamp: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .pipe(z.number())
-    .nullable(),
+  timestamp: z.string().nullable(),
   messageHash: z.string().nullable(),
   text: z.string(),
 });
