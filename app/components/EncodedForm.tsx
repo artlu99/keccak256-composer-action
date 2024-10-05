@@ -75,7 +75,7 @@ const EncodeForm = ({ text, fid, timestamp, messageHash }: EncodeFormProps) => {
       </div>
       <div className="flex justify-center">
         <button
-          className="btn btn-wide"
+          className="btn btn-wide btn-primary"
           disabled={isDisabledComposeButton}
           type="submit"
           id="composeButton"
