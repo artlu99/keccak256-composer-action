@@ -7,8 +7,9 @@ interface EncodeFormProps {
   fid?: number;
   timestamp?: string;
   messageHash?: string;
+  nonce?: string
 }
-const EncodeForm = ({ text, fid, timestamp, messageHash }: EncodeFormProps) => {
+const EncodeForm = ({ text, fid, timestamp, messageHash, nonce }: EncodeFormProps) => {
   const [rawText, setRawText] = useState(text);
   const [outputForm, setOutputForm] = useState("");
   const [isDisabledComposeButton, setIsDisabledComposeButton] = useState(true);
@@ -60,6 +61,7 @@ const EncodeForm = ({ text, fid, timestamp, messageHash }: EncodeFormProps) => {
         Compose button securely sends plaintext and metadata to the Composer
         Action server. It is always stored encrypted-at-rest.
       </p>
+      <input type="hidden" name="nonce" value={nonce} />
       <input type="hidden" name="fid" value={isPrivate ? 0 : fid} />
       <input type="hidden" name="timestamp" value={isPrivate ? 0 : timestamp} />
       <input

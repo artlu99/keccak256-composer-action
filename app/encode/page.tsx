@@ -20,6 +20,7 @@ function EncodePage() {
   const timestamp = searchParams.get("timestamp") ?? undefined;
   const messageHash = searchParams.get("messageHash") ?? undefined;
   const text = searchParams.get("text") ?? "";
+  const nonce = searchParams.get("nonce") ?? undefined;
 
   const [response, setResponse] = useState<Response>({ heartbeat: false });
 
@@ -44,6 +45,7 @@ function EncodePage() {
             fid={fid}
             timestamp={timestamp}
             messageHash={messageHash}
+            nonce={nonce}
           />
           <Footer />
         </div>
