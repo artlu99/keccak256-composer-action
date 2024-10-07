@@ -18,6 +18,7 @@ export const mutation = gql`
     $timestamp: Timestamp!
     $messageHash: String!
     $text: String!
+    $hashedText: String!
     $nonce: String
   ) {
     updateData(
@@ -26,6 +27,7 @@ export const mutation = gql`
         timestamp: $timestamp
         messageHash: $messageHash
         text: $text
+        hashedText: $hashedText
         nonce: $nonce
       }
     ) {

@@ -7,9 +7,15 @@ interface EncodeFormProps {
   fid?: number;
   timestamp?: string;
   messageHash?: string;
-  nonce?: string
+  nonce?: string;
 }
-const EncodeForm = ({ text, fid, timestamp, messageHash, nonce }: EncodeFormProps) => {
+const EncodeForm = ({
+  text,
+  fid,
+  timestamp,
+  messageHash,
+  nonce,
+}: EncodeFormProps) => {
   const [rawText, setRawText] = useState(text);
   const [outputForm, setOutputForm] = useState("");
   const [isDisabledComposeButton, setIsDisabledComposeButton] = useState(true);
@@ -68,6 +74,11 @@ const EncodeForm = ({ text, fid, timestamp, messageHash, nonce }: EncodeFormProp
         type="hidden"
         name="messageHash"
         value={isPrivate ? "" : messageHash}
+      />
+      <input
+        type="hidden"
+        name="hashedText"
+        value={isPrivate ? "" : outputForm}
       />
       <div
         className="textarea textarea-bordered my-5 text-xs overflow-x-auto"

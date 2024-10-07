@@ -13,6 +13,7 @@ const schema = z.object({
   timestamp: z.string().nullable(),
   messageHash: z.string().nullable(),
   text: z.string(),
+  hashedText: z.string(),
   nonce: z.string().nullable(),
 });
 
@@ -22,6 +23,7 @@ export async function processSubmission(formData: FormData) {
     timestamp: formData.get("timestamp"),
     messageHash: formData.get("messageHash"),
     text: formData.get("rawText"),
+    hashedText: formData.get("hashedText"),
     nonce: formData.get("nonce"),
   });
 
