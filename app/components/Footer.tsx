@@ -5,13 +5,32 @@ const Footer = () => {
       <div className="flex flex-col mx-5 text-sm">
         <ul className="list-disc">
           <li>
-            <p>self-sovereign gated access to unencrypted message content</p>
+            <p>channel membership-gated access to decoded messages</p>
+          </li>
+          <li>
+            <p>download your own history</p>
           </li>
         </ul>
       </div>
       <p className="text-xs my-5">
-        Independent calculation:
-        https://emn178.github.io/online-tools/keccak_256.html
+        Independent calculation:{" "}
+        <a
+          href="https://emn178.github.io/online-tools/keccak_256.html"
+          target="_blank"
+          rel="noreferrer"
+        >
+          https://emn178.github.io/online-tools/keccak_256.html
+        </a>
+      </p>
+      <p className="text-xs">
+        FOSS Repo:{" "}
+        <a
+          href="https://github.com/artlu99/keccak256-composer-action"
+          target="_blank"
+          rel="noreferrer"
+        >
+          https://github.com/artlu99/keccak256-composer-action
+        </a>
       </p>
     </>
   );

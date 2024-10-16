@@ -8,6 +8,7 @@ import { request } from "graphql-request";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import EncodeForm from "../components/EncodedForm";
+import NoNonce from "../components/NoNonce";
 
 export default function Page() {
   return <Suspense fallback={<div>Loading...</div>}>{<EncodePage />}</Suspense>;
@@ -40,13 +41,17 @@ function EncodePage() {
             heartbeat={response.heartbeat}
             isPrePermissionless={response?.isPrePermissionless}
           />
-          <EncodeForm
-            text={text}
-            fid={fid}
-            timestamp={timestamp}
-            messageHash={messageHash}
-            nonce={nonce}
-          />
+          {nonce ? (
+            <EncodeForm
+              text={text}
+              fid={fid}
+              timestamp={timestamp}
+              messageHash={messageHash}
+              nonce={nonce}
+            />
+          ) : (
+            <NoNonce />
+          )}
           <Footer />
         </div>
       </div>
