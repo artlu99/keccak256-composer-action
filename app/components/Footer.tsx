@@ -5,10 +5,10 @@ const Footer = () => {
       <div className="flex flex-col mx-5 text-sm">
         <ul className="list-disc">
           <li>
-            <p>channel membership-gated access to decoded messages</p>
+            <p>download your own history</p>
           </li>
           <li>
-            <p>download your own history</p>
+            <p>opt-in your channels to decoded messages</p>
           </li>
         </ul>
       </div>
