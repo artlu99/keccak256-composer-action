@@ -1,14 +1,59 @@
 const Footer = () => {
   return (
     <>
-      <h1 className="text-2xl">🔜</h1>
+      <h2 className="">
+        visit{" "}
+        <a href="https://SassyHash.artlu.xyz" target="_blank" rel="noreferrer">
+          SassyHash
+          <span className="opacity-50">.artlu.xyz</span>
+          &nbsp;
+        </a>
+        to:
+      </h2>
       <div className="flex flex-col mx-5 text-sm">
         <ul className="list-disc">
           <li>
-            <p>download your own history</p>
+            <p>
+              <a
+                href="https://sassyhash.artlu.xyz/download"
+                target="_blank"
+                rel="noreferrer"
+              >
+                download your own history
+              </a>
+            </p>
           </li>
           <li>
-            <p>opt-in your channels to decoded messages</p>
+            <p>
+              <a
+                href="https://sassyhash.artlu.xyz/channels"
+                target="_blank"
+                rel="noreferrer"
+              >
+                see all enabled channels
+              </a>
+            </p>
+          </li>
+        </ul>
+      </div>
+      <h2 className="">
+        use the{" "}
+        <a
+          href="https://warpcast.com/~/add-cast-action?url=https%3A%2F%2Fkeccak256-composer-action.artlu.workers.dev%2Fcast-action"
+          target="_blank"
+          rel="noreferrer"
+        >
+          cast action&nbsp;
+        </a>
+        to:
+      </h2>
+      <div className="flex flex-col mx-5 text-sm">
+        <ul className="list-disc">
+          <li>
+            <p>decode messages with permission</p>
+          </li>
+          <li>
+            <p>opt-in your channels to decode messages</p>
           </li>
         </ul>
       </div>

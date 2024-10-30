@@ -59,10 +59,17 @@ const EncodeForm = ({
           <span className="label-text-alt">no mentions or embeds</span>
         </div>
       </label>
-      <p id="privateBlurb" className="text-sm italic my-5" hidden={!isPrivate}>
-        Compose button sends blank metadata to the Composer Action server, using
-        client-side Javascript (React).
-      </p>
+      <div
+        id="privateBlurb"
+        className="text-sm italic my-5"
+        hidden={!isPrivate}
+      >
+        The server will not be able to decode, unless it already knows the code
+        by other means.
+        <div className="font-bold text-error">
+          Are you sure? Be sure before hitting Compose.
+        </div>
+      </div>
       <p id="storedBlurb" className="text-sm italic my-5" hidden={isPrivate}>
         Compose button securely sends plaintext and metadata to the Composer
         Action server. It is always stored encrypted-at-rest.
