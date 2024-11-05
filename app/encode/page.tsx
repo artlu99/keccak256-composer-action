@@ -1,14 +1,13 @@
 "use client";
 
-import Footer from "@/app/components/Footer";
+import EncodeForm from "@/app/components/EncodedForm";
 import Header from "@/app/components/Header";
+import NoNonce from "@/app/components/NoNonce";
 import { endpoint, query, Response } from "@/external/schema";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import EncodeForm from "../components/EncodedForm";
-import NoNonce from "../components/NoNonce";
 
 export default function Page() {
   return <Suspense fallback={<div>Loading...</div>}>{<EncodePage />}</Suspense>;
@@ -52,7 +51,6 @@ function EncodePage() {
           ) : (
             <NoNonce />
           )}
-          <Footer />
         </div>
       </div>
     </div>

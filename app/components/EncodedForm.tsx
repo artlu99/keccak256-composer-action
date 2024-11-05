@@ -1,6 +1,8 @@
+import { processSubmission } from "@/app/actions";
+import Footer from "@/app/components/Footer";
+import { MUTE_PHRASE } from "@/app/constants";
 import keccak256 from "keccak256";
 import { useState } from "react";
-import { processSubmission } from "../actions";
 
 interface EncodeFormProps {
   text: string;
@@ -20,6 +22,7 @@ const EncodeForm = ({
   const [outputForm, setOutputForm] = useState("");
   const [isDisabledComposeButton, setIsDisabledComposeButton] = useState(true);
   const [isPrivate, setIsPrivate] = useState(false);
+  const [includeMutePhrase, setIncludeMutePhrase] = useState(true);
 
   const handleRawTextChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -31,8 +34,10 @@ const EncodeForm = ({
     setIsDisabledComposeButton(false);
   };
 
-  const handleButtonClick = (rawText: string) => {
-    const text = keccak256(rawText).toString("hex");
+  const handleButtonClick = (rawText: string, includeMutePhrase: boolean) => {
+    const text =
+      keccak256(rawText).toString("hex") +
+      (includeMutePhrase ? `\n\n${MUTE_PHRASE}` : "");
     window.parent.postMessage(
       { type: "createCast", data: { cast: { text, embeds: [] } } },
       "*"
@@ -99,11 +104,22 @@ const EncodeForm = ({
           disabled={isDisabledComposeButton}
           type="submit"
           id="composeButton"
-          onClick={() => handleButtonClick(rawText)}
+          onClick={() => handleButtonClick(rawText, includeMutePhrase)}
         >
           Compose
         </button>
       </div>
+      <div className="flex justify-end my-2 mx-8">
+        <span className="text-sm italic mx-2">optional Mute phrase</span>
+        <input
+          type="checkbox"
+          id="mutePhrase"
+          className="toggle"
+          checked={includeMutePhrase}
+          onChange={(event) => setIncludeMutePhrase(event.target.checked)}
+        />
+      </div>
+      <Footer />
       <div className="flex justify-end my-2 mx-8">
         <span className="text-sm italic mx-2">Private</span>
         <input
