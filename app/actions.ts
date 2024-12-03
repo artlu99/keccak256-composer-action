@@ -48,6 +48,8 @@ export async function processSubmission(formData: FormData) {
     console.error({ errors: validatedFields.error.flatten().fieldErrors });
     return;
   }
+  
+  console.log("data:", validatedFields.data);
 
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
