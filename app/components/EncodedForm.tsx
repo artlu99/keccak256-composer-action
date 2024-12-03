@@ -1,6 +1,11 @@
 import { processSubmission } from "@/app/actions";
 import Footer from "@/app/components/Footer";
-import { MUTE_PHRASE } from "@/app/constants";
+import {
+  ANONCAST_FID,
+  MUTE_PHRASE,
+  RAWANON_FID,
+  SUPERANON_FID,
+} from "@/app/constants";
 import keccak256 from "keccak256";
 import { useState } from "react";
 
@@ -22,6 +27,8 @@ const EncodeForm = ({
   const [outputForm, setOutputForm] = useState("");
   const [isDisabledComposeButton, setIsDisabledComposeButton] = useState(true);
   const [isPrivate, setIsPrivate] = useState(false);
+  const [postToSuperanon, setPostToSuperanon] = useState(false);
+  const [postToAnoncast, setPostToAnoncast] = useState(false);
   const [includeMutePhrase, setIncludeMutePhrase] = useState(true);
 
   const handleRawTextChange = (
@@ -81,6 +88,21 @@ const EncodeForm = ({
       </p>
       <input type="hidden" name="nonce" value={nonce} />
       <input type="hidden" name="fid" value={isPrivate ? 0 : fid} />
+      <input
+        type="hidden"
+        name="fid2"
+        value={postToSuperanon ? SUPERANON_FID : 0}
+      />
+      <input
+        type="hidden"
+        name="fid3"
+        value={postToAnoncast ? RAWANON_FID : 0}
+      />
+      <input
+        type="hidden"
+        name="fid4"
+        value={postToAnoncast ? ANONCAST_FID : 0}
+      />
       <input type="hidden" name="timestamp" value={isPrivate ? 0 : timestamp} />
       <input
         type="hidden"
@@ -119,6 +141,28 @@ const EncodeForm = ({
           onChange={(event) => setIncludeMutePhrase(event.target.checked)}
         />
       </div>
+
+      <div className="flex justify-center my-4">
+        <div className="join active:btn-neutral">
+          <input
+            className="join-item btn btn-outline"
+            type="checkbox"
+            id="superanon"
+            checked={postToSuperanon}
+            onChange={(event) => setPostToSuperanon(event.target.checked)}
+            aria-label="superanon"
+          />
+          <input
+            className="join-item btn btn-outline active:btn-neutral"
+            type="checkbox"
+            id="rawanon | anoncast"
+            checked={postToAnoncast}
+            onChange={(event) => setPostToAnoncast(event.target.checked)}
+            aria-label="rawanon | anoncast"
+          />
+        </div>
+      </div>
+
       <Footer />
       <div className="flex justify-end my-2 mx-8">
         <span className="text-sm italic mx-2">Private</span>

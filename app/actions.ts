@@ -8,6 +8,20 @@ const schema = z.object({
   fid: z
     .string()
     .transform((val) => parseInt(val, 10))
+    .pipe(z.number()),
+  fid2: z
+    .string()
+    .transform((val) => parseInt(val, 10))
+    .pipe(z.number())
+    .nullable(),
+  fid3: z
+    .string()
+    .transform((val) => parseInt(val, 10))
+    .pipe(z.number())
+    .nullable(),
+  fid4: z
+    .string()
+    .transform((val) => parseInt(val, 10))
     .pipe(z.number())
     .nullable(),
   timestamp: z.string().nullable(),
@@ -20,6 +34,9 @@ const schema = z.object({
 export async function processSubmission(formData: FormData) {
   const validatedFields = schema.safeParse({
     fid: formData.get("fid"),
+    fid2: formData.get("fid2"),
+    fid3: formData.get("fid3"),
+    fid4: formData.get("fid4"),
     timestamp: formData.get("timestamp"),
     messageHash: formData.get("messageHash"),
     text: formData.get("rawText"),
@@ -29,6 +46,7 @@ export async function processSubmission(formData: FormData) {
 
   if (!validatedFields.success) {
     console.error({ errors: validatedFields.error.flatten().fieldErrors });
+    return;
   }
 
   const graphQLClient = new GraphQLClient(endpoint, {
@@ -38,7 +56,16 @@ export async function processSubmission(formData: FormData) {
   });
 
   try {
-    await graphQLClient.request(mutation, validatedFields.data);
+    const { fid, fid2, fid3, fid4, ...filteredData } = validatedFields.data;
+
+    // Call request for each fid
+    await graphQLClient.request(mutation, { ...filteredData, fid });
+    if (fid2 !== null)
+      await graphQLClient.request(mutation, { ...filteredData, fid2 });
+    if (fid3 !== null && fid4 !== null) {
+      await graphQLClient.request(mutation, { ...filteredData, fid3 });
+      await graphQLClient.request(mutation, { ...filteredData, fid4 });
+    }
   } catch (error) {
     console.error("Error updating data:", error);
   }
