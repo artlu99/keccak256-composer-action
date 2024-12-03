@@ -48,7 +48,7 @@ export async function processSubmission(formData: FormData) {
     console.error({ errors: validatedFields.error.flatten().fieldErrors });
     return;
   }
-  
+
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
       authorization: `Bearer ${authToken}`,
@@ -62,10 +62,10 @@ export async function processSubmission(formData: FormData) {
     await graphQLClient.request(mutation, { ...filteredData, fid });
     if (fid2 !== null && fid2 > 0)
       await graphQLClient.request(mutation, { ...filteredData, fid: fid2 });
-    if (fid3 !== null && fid4 !== null && fid3 > 0 && fid4 > 0) {
+    if (fid3 !== null && fid3 > 0)
       await graphQLClient.request(mutation, { ...filteredData, fid: fid3 });
+    if (fid4 !== null && fid4 > 0)
       await graphQLClient.request(mutation, { ...filteredData, fid: fid4 });
-    }
   } catch (error) {
     console.error("Error updating data:", error);
   }
