@@ -62,7 +62,7 @@ function EncodePage() {
       <div className="card w-96 bg-base-100">
         <div className="card-body">
           <Header
-            fid={fid}
+            fid={context?.user.fid ?? fid}
             heartbeat={response.heartbeat}
             isPrePermissionless={response?.isPrePermissionless}
           />
