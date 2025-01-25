@@ -17,6 +17,30 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Keccak256 Composer Action Form",
   description: "A form to compose text as Keccak256",
+  other: {
+    "fc:frame": JSON.stringify({
+      version: "next",
+      imageUrl: "https://sassyhash.artlu.xyz/og-clean.jpg",
+      button: {
+        title: "Launch Frame",
+        action: {
+          type: "launch_frame",
+          name: "Launch Frame",
+          url: process.env.APP_URL,
+          splashImageUrl:
+            "https://sassyhash.artlu.xyz/_astro/testimonial-bg-01.CofysqBI.webp",
+          splashBackgroundColor: "#000000",
+        },
+      },
+    }),
+  },
+  openGraph: {
+    images: [
+      {
+        url: "https://sassyhash.artlu.xyz/og-clean.jpg",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

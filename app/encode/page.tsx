@@ -4,6 +4,8 @@ import EncodeForm from "@/app/components/EncodedForm";
 import Header from "@/app/components/Header";
 import NoNonce from "@/app/components/NoNonce";
 import { endpoint, query, Response } from "@/external/schema";
+import { FrameContext } from "@farcaster/frame-core/dist/context";
+import { sdk } from "@farcaster/frame-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
 import { useSearchParams } from "next/navigation";
@@ -23,6 +25,30 @@ function EncodePage() {
   const nonce = searchParams.get("nonce") ?? undefined;
 
   const [response, setResponse] = useState<Response>({ heartbeat: false });
+  const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+  const [context, setContext] = useState<FrameContext | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const context = await sdk.context;
+        if (context) {
+          setContext(context as FrameContext);
+        } else {
+          console.error("Failed to load Farcaster context");
+        }
+        await sdk.actions.ready();
+      } catch (err) {
+        console.error("SDK initialization error:", err);
+      }
+    };
+
+    if (sdk && !isSDKLoaded) {
+      load().then(() => {
+        setIsSDKLoaded(true);
+      });
+    }
+  }, [isSDKLoaded]);
 
   const { data } = useQuery<Response>({
     queryKey: ["external-query"],
