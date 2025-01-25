@@ -25,8 +25,8 @@ export const metadata: Metadata = {
         title: "Launch Frame",
         action: {
           type: "launch_frame",
-          name: "Launch Frame",
-          url: process.env.APP_URL,
+          name: "SassyHash",
+          url: "https://keccak256-composer-action.vercel.app/encode?nonce=0",
           splashImageUrl:
             "https://sassyhash.artlu.xyz/_astro/testimonial-bg-01.CofysqBI.webp",
           splashBackgroundColor: "#000000",
