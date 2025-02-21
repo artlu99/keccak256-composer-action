@@ -7,7 +7,7 @@ import {
   SUPERANON_FID,
 } from "@/app/constants";
 import keccak256 from "keccak256";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface EncodeFormProps {
   text: string;
@@ -30,6 +30,13 @@ const EncodeForm = ({
   const [postToSuperanon, setPostToSuperanon] = useState(false);
   const [postToAnoncast, setPostToAnoncast] = useState(false);
   const [includeMutePhrase, setIncludeMutePhrase] = useState(true);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
 
   const handleRawTextChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -58,6 +65,7 @@ const EncodeForm = ({
           <span className="label-text">Unencrypted text:</span>
         </div>
         <textarea
+          ref={textareaRef}
           className="textarea textarea-bordered h-24"
           id="rawText"
           name="rawText"
@@ -65,6 +73,7 @@ const EncodeForm = ({
           maxLength={320}
           required
           onChange={handleRawTextChange}
+          autoFocus
         />
         <div className="label">
           <span className="label-text-alt">max 320 chars</span>
