@@ -25,6 +25,9 @@ const EncodeForm = ({
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.focus();
+      setTimeout(() => {
+        textareaRef.current?.focus();
+      }, 100);
     }
   }, []);
 
