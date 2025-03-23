@@ -9,21 +9,6 @@ const schema = z.object({
     .string()
     .transform((val) => parseInt(val, 10))
     .pipe(z.number()),
-  fid2: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .pipe(z.number())
-    .nullable(),
-  fid3: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .pipe(z.number())
-    .nullable(),
-  fid4: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .pipe(z.number())
-    .nullable(),
   timestamp: z.string().nullable(),
   messageHash: z.string().nullable(),
   text: z.string(),
@@ -34,9 +19,6 @@ const schema = z.object({
 export async function processSubmission(formData: FormData) {
   const validatedFields = schema.safeParse({
     fid: formData.get("fid"),
-    fid2: formData.get("fid2"),
-    fid3: formData.get("fid3"),
-    fid4: formData.get("fid4"),
     timestamp: formData.get("timestamp"),
     messageHash: formData.get("messageHash"),
     text: formData.get("rawText"),
@@ -56,16 +38,12 @@ export async function processSubmission(formData: FormData) {
   });
 
   try {
-    const { fid, fid2, fid3, fid4, messageHash, ...filteredData } = validatedFields.data;
-
-    // Call request for each fid
-    await graphQLClient.request(mutation, { ...filteredData, messageHash, fid });
-    if (fid2 !== null && fid2 > 0)
-      await graphQLClient.request(mutation, { ...filteredData, messageHash: messageHash + '-2', fid: fid2 });
-    if (fid3 !== null && fid3 > 0)
-      await graphQLClient.request(mutation, { ...filteredData, messageHash: messageHash + '-3', fid: fid3 });
-    if (fid4 !== null && fid4 > 0)
-      await graphQLClient.request(mutation, { ...filteredData, messageHash: messageHash + '-4', fid: fid4 });
+    const { fid, messageHash, ...filteredData } = validatedFields.data;
+    await graphQLClient.request(mutation, {
+      ...filteredData,
+      messageHash,
+      fid,
+    });
   } catch (error) {
     console.error("Error updating data:", error);
   }
