@@ -50,7 +50,7 @@ const EncodeForm = ({
   };
 
   return (
-    <form action={processSubmission}>
+    <form action={processSubmission as unknown as string}>
       <label className="form-control">
         <div className="label">
           <span className="label-text">👀 IYKYK</span>
