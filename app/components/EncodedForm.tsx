@@ -53,7 +53,7 @@ const EncodeForm = ({
     <form action={processSubmission}>
       <label className="form-control">
         <div className="label">
-          <span className="label-text">Plaintext:</span>
+          <span className="label-text">👀 IYKYK</span>
         </div>
         <textarea
           ref={textareaRef}
@@ -71,31 +71,38 @@ const EncodeForm = ({
           <span className="label-text-alt">no mentions or embeds</span>
         </div>
       </label>
-      <p id="storedBlurb" className="text-sm italic my-5">
-        Encoded text, stored encrypted-at-rest:
-      </p>
       <input type="hidden" name="nonce" value={nonce} />
       <input type="hidden" name="fid" value={fid} />
       <input type="hidden" name="timestamp" value={timestamp} />
       <input type="hidden" name="messageHash" value={messageHash} />
       <input type="hidden" name="hashedText" value={outputForm} />
-      <div
-        className="textarea textarea-bordered my-5 text-xs overflow-x-auto"
-        id="outputForm"
-      >
-        {outputForm}
-      </div>
-      <div className="flex justify-center">
-        <button
-          className="btn btn-wide btn-primary"
-          disabled={isDisabledComposeButton}
-          type="submit"
-          id="composeButton"
-          onClick={() => handleButtonClick(rawText)}
-        >
-          Compose
-        </button>
-      </div>
+      {outputForm.length > 0 ? (
+        <>
+          {" "}
+          <p id="storedBlurb" className="text-sm my-5">
+            SassyHash 💅
+          </p>
+          <div
+            className="textarea textarea-bordered my-5 text-xs overflow-x-auto"
+            id="outputForm"
+          >
+            {outputForm}
+          </div>
+        </>
+      ) : null}
+      {!isDisabledComposeButton ? (
+        <div className="flex justify-center">
+          <button
+            className="btn btn-wide btn-primary"
+            disabled={isDisabledComposeButton || rawText.length === 0}
+            type="submit"
+            id="composeButton"
+            onClick={() => handleButtonClick(rawText)}
+          >
+            Compose
+          </button>
+        </div>
+      ) : null}
     </form>
   );
 };
