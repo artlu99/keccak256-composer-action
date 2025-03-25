@@ -8,8 +8,8 @@ export const query = gql`
   }
 `;
 export interface Response {
-  heartbeat: boolean;
-  isPrePermissionless?: boolean;
+	heartbeat: boolean;
+	isPrePermissionless?: boolean;
 }
 export const authToken = process.env.AUTH_TOKEN;
 export const mutation = gql`
